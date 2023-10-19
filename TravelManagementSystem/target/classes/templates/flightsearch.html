@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Search</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8; /* Light Gray */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(to right, #004080, #001f40); /* Gradient from Deep to Dark Blue */
+            color: #ffffff; /* White */
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        .header-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-icon {
+            margin: 0 10px;
+            width: 40px; /* Adjust the size as needed */
+            height: 40px; /* Adjust the size as needed */
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        nav {
+            background: #808080; /* Set to grey */
+            color: #ffffff; /* White */
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        nav a {
+            color: #ffffff; /* White */
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 10px 0;
+            position: relative;
+            transition: border-bottom 0.3s ease;
+        }
+
+        nav a:hover {
+            border-bottom: 2px solid #ffffff;
+        }
+
+        footer {
+            background: linear-gradient(to right, #004080, #001f40); /* Gradient from Deep to Dark Blue */
+            color: #ffffff; /* White */
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #flightSearch {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #ffffff; /* White */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #flightList {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4caf50;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-icons">
+            <div class="header-icon">
+                <img src="flight_image.png" alt="Flight Icon">
+            </div>
+            <h1>Travel Transit</h1>
+            <div class="header-icon">
+                <img src="hotel_image.png" alt="Hotel Icon">
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="indexLogin.html" style="border-bottom: 2px solid #ffffff;">Home</a>
+        <a href="aboutUser">About</a>
+        <a href="maps">Maps</a>
+        <a href="flightsearch">Flights</a>
+        <a href="/">Logout</a>
+    </nav>
+
+    <div id="flightSearch">
+        <h1>Flight Search</h1>
+        <label for="from">From Destination:</label>
+        <select id="from">
+            <option value="delhi">Delhi</option>
+        </select>
+
+        <label for="to">To Destination:</label>
+        <select id="to">
+            <option value="delhi">Delhi</option>
+            <option value="mumbai">Mumbai</option>
+            <option value="hyderabad">Hyderabad</option>
+            <option value="vijayawada">Vijayawada</option>
+            <option value="chennai">Chennai</option>
+            <option value="kolkata">Kolkata</option>
+        </select>
+
+        <button onclick="searchFlights()">Search Flights</button>
+
+        <div id="flightList"></div>
+    </div>
+
+    <footer>
+        &copy; 2023 Travel Transit. All rights reserved.
+    </footer>
+
+    <script>
+        const flightsData = {
+            'delhi-mumbai': [
+                { airline: 'AkasaAir', from: 'Delhi', to: 'Mumbai', flightNumber: 'QP1719', departure: '09:00', departureGate: 'A1', arrival: '10:50' },
+                { airline: 'Indigo', from: 'Delhi', to: 'Mumbai', flightNumber: '6E2075', departure: '08:00', departureGate: 'B2', arrival: '10:15' },
+                { airline: 'VISTARA', from: 'Delhi', to: 'Mumbai', flightNumber: 'UK963', departure: '9:00', departureGate: 'C3', arrival: '11:15' },
+                { airline: 'AIRINDIA', from: 'Delhi', to: 'Mumbai', flightNumber: 'AI441', departure: '17:15', departureGate: 'G4', arrival: '19:13 ' }
+            ],
+            'delhi-hyderabad': [
+                { airline: 'AIRINDIA', from: 'Delhi', to: 'hyderabad', flightNumber: 'AI544', departure: '17:00', departureGate: 'X1', arrival: '19:10' },
+                { airline: 'VISTARA', from: 'Delhi', to: 'hyderabad', flightNumber: 'UK899', departure: '14:45', departureGate: 'Y2', arrival: '17:00' },
+                { airline: 'INDIGO', from: 'Delhi', to: 'hyderabad', flightNumber: '6E2461', departure: '1:55', departureGate: 'Z3', arrival: '04:10' },
+                { airline: 'SpiceJet', from: 'Delhi', to: 'hyderabad', flightNumber: 'SG8164', departure: '23:00', departureGate: 'S5', arrival: '01:00' }
+            ],
+            'delhi-vijayawada': [
+                { airline: 'INDIGO', from: 'Delhi', to: 'VIJAYAWADA', flightNumber: '6E2005', departure: '10:10', departureGate: 'X1', arrival: '12:15' },
+                { airline: 'INDIGO', from: 'Delhi', to: 'VIJAYAWADA', flightNumber: '6E2187', departure: '15:05', departureGate: 'Y2', arrival: '17:20' },
+                { airline: 'AiRINDIA', from: 'Delhi', to: 'VIJAYAWADA', flightNumber: 'AI459', departure: '06:00', departureGate: 'Z3', arrival: '08:30' },
+                { airline: 'AIRINDIA', from: 'Delhi', to: 'VIJAYAWADA', flightNumber: 'AI467', departure: '21:10', departureGate: 'S5', arrival: '23:40' }
+            ],
+            'delhi-chennai': [
+                { airline: 'AIRINDIA', from: 'Delhi', to: 'Chennai', flightNumber: 'AI540', departure: '20:40', departureGate: 'X1', arrival: '23:35' },
+                { airline: 'INDIGO', from: 'Delhi', to: 'Chennai', flightNumber: '6E2059', departure: '07:10', departureGate: 'Y2', arrival: '10:00' },
+                { airline: 'VISTARA', from: 'Delhi', to: 'Chennai', flightNumber: 'UK837', departure: '17:35', departureGate: 'Z3', arrival: '20:20' },
+                { airline: 'SPICEJET', from: 'Delhi', to: 'Chennai', flightNumber: 'SG8103', departure: '21:00', departureGate: 'S5', arrival: '23:50' }
+            ],
+            'delhi-kolkata': [
+                { airline: 'INDIGO', from: 'Delhi', to: 'Kolkata', flightNumber: '6E2057', departure: '19:00', departureGate: 'X1', arrival: '21:05' },
+                { airline: 'SPICEJET', from: 'Delhi', to: 'Kolkata', flightNumber: 'SG8263', departure: '07:10', departureGate: 'Y2', arrival: '09:30' },
+                { airline: 'VISTARA', from: 'Delhi', to: 'Kolkata', flightNumber: 'UK737', departure: '15:45', departureGate: 'Z3', arrival: '18:05' },
+                { airline: 'AIRINDIA', from: 'Delhi', to: 'Kolkata', flightNumber: 'AI762', departure: '21:00', departureGate: 'S5', arrival: '23:30' }
+            ],
+            // Add more combinations as needed
+        };
+
+        function searchFlights() {
+            const fromDestination = document.getElementById('from').value;
+            const toDestination = document.getElementById('to').value;
+
+            const key = `${fromDestination.toLowerCase()}-${toDestination.toLowerCase()}`;
+            const flights = flightsData[key] || [];
+
+            displayFlights(flights);
+        }
+
+        function displayFlights(flights) {
+            const flightListElement = document.getElementById('flightList');
+            flightListElement.innerHTML = '';
+
+            if (flights.length === 0) {
+                flightListElement.innerHTML = '<p>No flights available</p>';
+            } else {
+                const table = document.createElement('table');
+                const headerRow = table.insertRow(0);
+
+                // Create table headers in the specified order
+                const headers = ['Airline', 'From', 'To', 'Flight Number', 'Arrival', 'Departure Gate', 'Departure'];
+                headers.forEach(headerText => {
+                    const th = document.createElement('th');
+                    th.textContent = headerText;
+                    headerRow.appendChild(th);
+                });
+
+                // Add flight data to the table
+                flights.forEach(flight => {
+                    const row = table.insertRow();
+                    const values = [flight.airline, flight.from, flight.to, flight.flightNumber, flight.arrival, flight.departureGate, flight.departure];
+                    values.forEach(value => {
+                        const cell = row.insertCell();
+                        cell.textContent = value;
+                    });
+                });
+
+                flightListElement.appendChild(table);
+            }
+        }
+    </script>
+</body>
+</html>

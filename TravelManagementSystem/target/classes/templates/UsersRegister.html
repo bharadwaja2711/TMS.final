@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Transit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f8f8; /* Light Gray */
+        }
+
+        header {
+            background: linear-gradient(to right, #004080, #001f40); /* Gradient from Deep to Dark Blue */
+            color: #ffffff; /* White */
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-icon {
+            margin: 0 10px;
+            width: 60px; /* Increased size */
+            height: 60px; /* Increased size */
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        nav {
+            background: #4285f4; /* Blue */
+            color: #ffffff; /* White */
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: #ffffff; /* White */
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 10px 0;
+            position: relative;
+            transition: color 0.3s ease; /* Smooth color transition */
+        }
+
+        nav a:after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 3px; /* Increased height for better visibility */
+            background-color: #ffcc00; /* Bright Yellow */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: 0 50%;
+            transition: transform 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ffd700; /* Gold */
+        }
+
+        nav a:hover:after {
+            transform: scaleX(1);
+        }
+
+        section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .card-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: stretch;
+        }
+
+        .card {
+            flex: 1;
+            max-width: 400px; /* Increased card size */
+            padding: 20px;
+            background-color: #ffffff; /* White */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card h2 {
+            margin-bottom: 10px;
+            color: #004080; /* Deep Blue */
+        }
+
+        .card p {
+            color: #555; /* Dark Grey */
+        }
+
+        .table-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #004080;
+            color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        footer {
+            background: linear-gradient(to right, #004080, #001f40); /* Gradient from Deep to Dark Blue */
+            color: #ffffff; /* White */
+            padding: 10px; /* Reduced size */
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-icons">
+            <div class="header-icon">
+                <img src="flight_image.png" alt="Flight Icon">
+            </div>
+            <h1 style="color: #ffd700; font-weight: 700;">Travel Transit</h1>
+            <div class="header-icon">
+                <img src="hotel_image.png" alt="Hotel Icon">
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="indexLogin">Home</a>
+        <a href="aboutLogin" style="border-bottom: 2px solid #ffffff;">About</a>
+        <a href="admin">Admin</a>
+        <a href="UsersRegister">Users Register</a>
+        <a href="/">Logout</a>
+    </nav>
+
+    <section>
+                <h2>User List</h2>
+                <div class="table-container">
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>FirstName</th>
+                                <th>LastName</th>
+                                <th>PhoneNumber</th>
+                                <th>SecurityQuestion</th>
+                                <!-- Add more columns as needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Iterate over the userList and populate the table -->
+                            <tr th:each="user : ${userList}">
+                                <td th:text="${user.id}"></td>
+                                <td th:text="${user.username}"></td>
+                                <td th:text="${user.password}"></td>
+                                <td th:text="${user.firstName}"></td>
+                                <td th:text="${user.lastName}"></td>
+                                <td th:text="${user.phoneNumber}"></td>
+                                <td th:text="${user.securityQuestion}"></td>
+                                <!-- Add more columns as needed -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+    </section>
+
+    <footer>
+        &copy; 2023 Travel Transit. All rights reserved.
+    </footer>
+
+</body>
+
+</html>
